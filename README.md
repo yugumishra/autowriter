@@ -1,2 +1,11 @@
 # autowriter
 An autowriter for typing.com implemented with Java
+
+This is an autowriter for typing.com that uses the Java Robot library to simulate typing keys. 
+
+How the Program Types:
+The Java Robot class provides a method of simulating keyboard and mouse actions using the keyPress, keyRelease, mousePress, and mouseRelease methods. Each of these requires a specific keycode to determine which key/mouse button to press. These keycodes can be accessed from the InputEvent class (or its child class KeyEvent). However, this keycode method is inefficient as in order to type long strings of characters, you would need to retype the keycodes again and again. This is why the program uses a HashMap to solve this problem. It uses characters as keys and their corresponding keycodes as the values. This makes it much easier to access a character's keycode, therefore making it much easier to type. With this HashMap system, the program can type long strings with ease. However, the Robot class does have its limitations in terms of characters it can type. For example, some characters it cannot type would be the hyphen, and apostrophe. To prevent the program from crashing from a NullPointerException, whenever the program encounters a character it cannot type, it simply types an a.
+
+
+How the Program knows what to Type:
+Because the program can accept a string of characters and type them out, the program now needs to find what to type. It does this by extracting the text in the HTML source code in typing.com. The program automates the text-extraction process by using keyboard shortcuts & mouse presses to use Chrome Developer Tools. The program inspects the website, then copies the base element in the HTML and pastes it into a file. The program then reads that file and gets the HTML source code. Because not all of the source code is necessary, the program cuts out everything before a certain string that indicates the start of the text needed to be typed. Because this text is always outside the angular brackets, the program filters out any characters in those brackets. Afterward, it replaces the '&nbsp;' (non breaking space character) in the string with actual spaces, so that the Robot class can type them. After the text is completely extracted, the unnecessary text afterward is also removed, and then the program can begin typing.
